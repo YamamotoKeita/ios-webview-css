@@ -41,11 +41,13 @@ class MainViewController: UIViewController {
 
     func appendStyleSheet(_ css: String) {
         let escapedCss = escapeForStringLiteral(css)
-        var script = "var style = document.createElement('style');"
-        script += "style.type = 'text/css';"
-        script += "var content = document.createTextNode('\(escapedCss)');"
-        script += "style.appendChild(content);"
-        script += "document.body.appendChild(style);"
+        let script = """
+var style = document.createElement('style');
+style.type = 'text/css';
+var content = document.createTextNode('\(escapedCss)');
+style.appendChild(content);
+document.body.appendChild(style);
+"""
         webView?.evaluateJavaScript(script)
     }
 
