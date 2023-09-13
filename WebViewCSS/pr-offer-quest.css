@@ -62,7 +62,6 @@ body {
     font-size: 14px;
     padding: 20px 20px 0 20px;
 }
-.p-pr-offer-body__outline tr:last-child th,
 .p-pr-offer-body__outline tr:last-child td {
     padding-bottom: 20px;
 }
