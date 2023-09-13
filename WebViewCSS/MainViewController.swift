@@ -1,7 +1,7 @@
 import UIKit
 import WebKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
 
     @IBOutlet weak var containerView: UIView!
 
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: WKNavigationDelegate {
+extension MainViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if webView.url?.absoluteString == "about:blank" { return }
 
