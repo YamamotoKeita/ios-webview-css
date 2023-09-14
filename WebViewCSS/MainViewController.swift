@@ -3,50 +3,59 @@ import WebKit
 
 class MainViewController: UIViewController {
 
-    @IBOutlet weak var containerView: UIView!
-
-    var webView: WKWebView?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        load()
+    @IBOutlet weak var webView: WKWebView! {
+        didSet {
+            webView.navigationDelegate = self
+            loadBaseHTML()
+        }
     }
 
-    func load() {
-        let webView = createWebView()
+    private var isHTMLReady = false
+    private var afterReady: (() -> Void)?
+
+    func loadBaseHTML() {
         if let htmlPath = Bundle.main.path(forResource: "pr-offer-quest", ofType: "html") {
             let htmlUrl = URL(fileURLWithPath: htmlPath, isDirectory: false)
             webView.loadFileURL(htmlUrl, allowingReadAccessTo: htmlUrl)
         }
     }
 
-    func createWebView() -> WKWebView {
-        self.webView?.removeFromSuperview()
-
-        let config = WKWebViewConfiguration()
-        let webView = WKWebView(frame: CGRect.zero, configuration: config)
-        webView.isInspectable = true
-        webView.navigationDelegate = self
-        self.webView = webView
-
-        containerView.addSubview(webView)
-
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.leadingAnchor.constraint(equalTo:containerView.leadingAnchor).isActive = true
-        webView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        webView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        webView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-        return webView
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        reserveBody(html: TestData.data[0])
     }
 
-    func setBody(html: String) {
+
+    @IBAction func body1Action(_ sender: Any) {
+        reserveBody(html: TestData.data[0])
+    }
+
+    @IBAction func body2Action(_ sender: Any) {
+        reserveBody(html: TestData.data[1])
+    }
+
+    @IBAction func body3Action(_ sender: Any) {
+        reserveBody(html: TestData.data[2])
+    }
+    
+    func reserveBody(html: String) {
+        if isHTMLReady {
+            setBody(html: html)
+        } else {
+            afterReady = { [weak self] in
+                self?.setBody(html: html)
+            }
+        }
+    }
+
+    private func setBody(html: String) {
         let escaped = escapeForStringLiteral(html)
         let script = "document.body.innerHTML = '\(escaped)';"
         webView?.evaluateJavaScript(script)
     }
 
     func escapeForStringLiteral(_ src: String) -> String {
-        let stringLiteralConversion = [
+        let conversion = [
             "\r": "",
             "\n": "\\n",
             "\"": "\\\"",
@@ -54,7 +63,7 @@ class MainViewController: UIViewController {
             "\t": "\\t",
         ]
         var result = src
-        stringLiteralConversion.forEach {key, value in
+        conversion.forEach {key, value in
             result = result.replacingOccurrences(of: key, with: value)
         }
         return result
@@ -64,6 +73,8 @@ class MainViewController: UIViewController {
 extension MainViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if webView.url?.absoluteString == "about:blank" { return }
-        setBody(html: TestData.prOfferBody)
+        isHTMLReady = true
+        afterReady?()
+        afterReady = nil
     }
 }

@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,22 +16,58 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aPa-aP-9Fu">
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AiT-4E-iL6">
                                 <rect key="frame" x="20" y="79" width="353" height="719"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PiJ-Bh-ZPp">
+                                <rect key="frame" x="20" y="763.66666666666663" width="353" height="34.333333333333371"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Mu-zB-9vi">
+                                        <rect key="frame" x="0.0" y="0.0" width="117.66666666666667" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="本文1"/>
+                                        <connections>
+                                            <action selector="body1Action:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mdA-OZ-acY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLE-cX-xhD">
+                                        <rect key="frame" x="117.66666666666666" y="0.0" width="117.66666666666666" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="本文2"/>
+                                        <connections>
+                                            <action selector="body2Action:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Hk-f2-vmA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSn-B7-H3d">
+                                        <rect key="frame" x="235.33333333333334" y="0.0" width="117.66666666666666" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="本文3"/>
+                                        <connections>
+                                            <action selector="body3Action:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UYt-8v-mcz"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="WhiteTwo"/>
                         <constraints>
-                            <constraint firstItem="aPa-aP-9Fu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="7cd-A0-Xwv"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="aPa-aP-9Fu" secondAttribute="bottom" constant="20" id="XXD-mc-Jle"/>
-                            <constraint firstItem="aPa-aP-9Fu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="krZ-VU-0WH"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="aPa-aP-9Fu" secondAttribute="trailing" constant="20" id="mZA-Lk-c6e"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="AiT-4E-iL6" secondAttribute="bottom" constant="20" id="77Y-U3-zFx"/>
+                            <constraint firstItem="PiJ-Bh-ZPp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="DTY-K3-fq0"/>
+                            <constraint firstItem="AiT-4E-iL6" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="KOa-WP-azB"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AiT-4E-iL6" secondAttribute="trailing" constant="20" id="So8-gS-JJz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="PiJ-Bh-ZPp" secondAttribute="bottom" constant="20" id="cgz-h3-ln0"/>
+                            <constraint firstItem="AiT-4E-iL6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="h61-ce-FEw"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PiJ-Bh-ZPp" secondAttribute="trailing" constant="20" id="z3P-x3-qZt"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="containerView" destination="aPa-aP-9Fu" id="rGF-YN-cbM"/>
+                        <outlet property="webView" destination="AiT-4E-iL6" id="UQX-dJ-j7u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -44,8 +79,5 @@
         <namedColor name="WhiteTwo">
             <color red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
