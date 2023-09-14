@@ -39,20 +39,8 @@ class MainViewController: UIViewController {
         return webView
     }
 
-    func appendStyleSheet(_ css: String) {
-        let escapedCss = escapeForStringLiteral(css)
-        let script = """
-var style = document.createElement('style');
-style.type = 'text/css';
-var content = document.createTextNode('\(escapedCss)');
-style.appendChild(content);
-document.body.appendChild(style);
-"""
-        webView?.evaluateJavaScript(script)
-    }
-
-    func appendBody() {
-        let escaped = escapeForStringLiteral(TestData.prOfferBody)
+    func setBody(html: String) {
+        let escaped = escapeForStringLiteral(html)
         let script = "document.body.innerHTML = '\(escaped)';"
         webView?.evaluateJavaScript(script)
     }
@@ -71,26 +59,11 @@ document.body.appendChild(style);
         }
         return result
     }
-
-    func readResourceString(name: String, type: String) -> String? {
-        if let path = Bundle.main.path(forResource: name, ofType: type) {
-            do {
-                return try String(contentsOfFile: path)
-            } catch  {
-                print(error)
-            }
-        }
-        return nil
-    }
 }
 
 extension MainViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if webView.url?.absoluteString == "about:blank" { return }
-
-        if let css = readResourceString(name: "pr-offer-quest", type: "css") {
-            appendStyleSheet(css)
-        }
-        appendBody()
+        setBody(html: TestData.prOfferBody)
     }
 }
