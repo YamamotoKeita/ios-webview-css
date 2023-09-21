@@ -9,7 +9,8 @@ class MainViewController: UIViewController {
             loadBaseHTML()
         }
     }
-
+    @IBOutlet weak var webViewHeightConstraint: NSLayoutConstraint!
+    
     private var isHTMLReady = false
     private var afterReady: (() -> Void)?
 
@@ -51,7 +52,14 @@ class MainViewController: UIViewController {
     private func setBody(html: String) {
         let escaped = escapeForStringLiteral(html)
         let script = "document.body.innerHTML = '\(escaped)';"
-        webView?.evaluateJavaScript(script)
+        webView.evaluateJavaScript(script)
+
+        webView.evaluateJavaScript("document.body.clientHeight") { [weak self] (result, error) in
+            guard let self else { return }
+            if let height = result as? CGFloat {
+                webViewHeightConstraint.constant = height
+            }
+        }
     }
 
     func escapeForStringLiteral(_ src: String) -> String {
